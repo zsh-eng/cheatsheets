@@ -1,0 +1,893 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage[table]{xcolor}
+\usepackage{vwcol}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usepackage{mathtools}
+\usepackage{nicematrix}
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
+\graphicspath{ {./images/} }
+\setlist{nosep}
+
+\pdfinfo{
+  /Title (CS1231S.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Zhi Sheng)
+  /Subject (Example)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}%
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+% makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+%  for logical not operator
+\renewcommand{\lnot}{\mathord{\sim}}
+\renewcommand{\bf}[1]{\textbf{#1}}
+\newcommand{\abs}[1]{\vert #1 \vert}
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+
+\makeatother
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{myblue}}
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\let\iff\leftrightarrow
+\let\Iff\Leftrightarrow
+\let\then\rightarrow
+\let\Then\Rightarrow
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{4}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+    \fbox{%
+        \parbox{0.8\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{CS1231S}}
+            \\ \normalsize{AY22/23 Sem 1 Midterm}}
+            \\ {\footnotesize{Updated by Zhi Sheng}} 
+            \\ {\footnotesize \textcolor{myblue}{Adapted from github.com/jovyntls}} 
+        }%
+    }
+\end{center}
+
+\section{01. PROOFS}
+\subsection{Sets of Numbers}
+    $\mathbb{N}$ : natural numbers ($\mathbb{Z}_{\geq 0}$)
+\\* $\mathbb{Z}$ : integers
+\\* $\mathbb{Q}$ : rational numbers
+\\* $\mathbb{R}$ : real numbers
+\\* $\mathbb{C}$ : complex numbers
+
+\subsection{Basic Properties of Integers}
+\begin{center}
+    Closure (under $+$ and $x$)
+    \\* $x+y \in \mathbb{Z} \land xy \in \mathbb{Z}$
+
+    Commutativity
+    \\* $a + b = b + a \land ab = ba$
+
+    Associativity
+    \\* $a + b + c = a + (b + c) = (a + b) + c$
+    \\* $abc = a(bc) = (ab)c$
+
+    Distributivity
+    \\* $a(b + c) = ab + ac$
+
+    Trichotomy
+    \\* $(a < b) \lor (a > b) \lor (a = b)$
+\end{center}
+ 
+\subsection{Number Definitions}
+\begin{center}
+    Even/Odd
+    \\* $n \text{ is even} \iff \exists k \in \mathbb{Z} \mid n = 2k$
+    \\* $n \text{ is odd} \iff \exists k \in \mathbb{Z} \mid n = 2k + 1$
+
+    Prime/Composite
+    \\* $n \text{ is prime} \iff n>1 \text{ and } \forall r, s \in \mathbb{Z}^+, n=rs \then (r=n)\lor(r=s)$
+    \\* $n \text{ is composite} \iff n>1 \text{ and } \exists r, s \in \mathbb{Z}^+ s.t. n = rs \text{ and } 1<r<n \text{ and } 1<s<n$
+
+    Divisibility ("$d$ divides $n$": $n,d \in \mathbb{Z}$ and $d \neq 0$)
+    \\* $d \mid n \iff \exists k \in \mathbb{Z} \mid n = kd$
+
+    Rational
+    \\* $r \text{ is rational} \iff \exists a, b \in \mathbb{Z} \mid r = \frac{a}{b} \text{ and } b \neq 0$
+
+    Fraction in lowest term
+    \\* $\frac{a}{b}$ where $b \neq 0$ is said to be in \emph{lowest terms} if the largest integer that divides
+    both $a$ and $b$ is 1.
+
+    Congruence
+    \\* Let $a, b \in \mathbb{Z}$ and $n \in \mathbb{Z}^+$. a is \bf{congruent} to b modulo n,
+    $a \equiv b \ (\text{mod } n) \iff n \mid (a -b)$ or $\exists k \in \mathbb{Z} (a - b = nk)$
+
+\end{center}
+
+\section{04. METHODS OF PROOF}
+\subsection{Proof by Exhaustion/Cases}
+\begin{enumerate}
+    \item list out possible cases
+    \begin{enumerate}
+        \item Case 1: $n$ is odd OR If $n = 9$, ...
+        \item Case 2: $n$ is even OR If $n = 16$, ...
+    \end{enumerate}
+    \item therefore ...
+\end{enumerate}
+
+\subsection{Proof by Contradiction}
+\begin{enumerate}
+    \item Suppose not, i.e. \dots (note: use De Morgan's Law if required)
+    \begin{enumerate}
+        \item <proof>
+        \item \dots but this contradicts \dots
+    \end{enumerate}
+    \item Hence the supposition that \dots is false. \\* Therefore \dots
+\end{enumerate}
+
+\subsection{Proof by Contraposition}
+\begin{enumerate}
+    \item Contrapositive statement: $\lnot q \then \lnot p$
+    \item let $\lnot q$
+    \begin{enumerate}
+        \item <proof>
+        \item hence $\lnot p$
+    \end{enumerate}
+    \item $\therefore p \then q$
+\end{enumerate}
+
+\subsection{Proof by Construction}
+\begin{enumerate}
+    \item Let $x = 3, y=4, z=5$.
+    \item Then $x, y, z \in \mathbb{Z}_{\geq 1}$ and $x^2 + y^2 = 3^2 + 4^2 = 9 + 16 = 25 = 5^2$.
+    \item Thus $\exists x, y, z \in \mathbb{Z}_{\geq 1}$ such that $x^2 + y^2 = z^2$.
+\end{enumerate}
+
+\subsection{Proof by Induction}
+\begin{enumerate}
+    \item For each $n \in \mathbb{Z}_{\geq 1}$, let $P(n)$ be the proposition "$\dots$"
+    \item (base step) $P(1)$ is true because <manual method>
+    \item (induction step) 
+    \begin{enumerate}
+        \item let $k \in \mathbb{Z}_{\geq 1}$ s.t. $P(k)$ is true
+        \item Then \dots
+        \item proof that $P(k + 1)$ is true - e.g. $P(k+1) = P(k) + term_{k+1}$
+        \item So $P(k + 1)$ is true.
+    \end{enumerate}
+    \item Hence $\forall n \in \mathbb{Z}_{\geq 1} P(n)$ is true by MI.
+\end{enumerate}
+
+\subsection{Proofs for Sets}
+\bf{Equality of Sets (A=B)}
+\begin{enumerate}
+    \item $(\subseteq)$ Take any $z \in A$.
+        \begin{enumerate}
+            \item $\dots$
+            \item $\therefore z \in B$.
+        \end{enumerate}
+    \item $(\supseteq)$ Take any $z \in B$.
+    \begin{enumerate}
+        \item $\dots$
+        \item $\therefore z \in A$.
+    \end{enumerate}
+    \item Therefore, $A=B$ (by definition of set equality).
+\end{enumerate}
+
+\bf{Element Method}
+\begin{enumerate}
+    \item $A \cap (B \backslash C) = \{ x : x \in A \land x \in (B \backslash C) \}$ (by def. of $\cap$)
+    \item $= \{ x : x \in A \land (x \in B \land x \notin C)\}$ (by def. of $\backslash$)
+    \item $\dots$
+    \item $= (A \cap B) \backslash C$ (by def. of $\backslash$)
+\end{enumerate}
+
+\subsection{Proofs for Relations}
+\bf{Equivalence Relation}
+\begin{enumerate}
+    \item ("Reflexivity") Take any $a \in A$
+    \begin{enumerate}
+        \item \dots
+        \item Thus, $a \ R \ a$ and $R$ is reflexive.
+    \end{enumerate}
+
+    \item ("Symmetry") Take any $a,b \in A$.
+    \begin{enumerate}
+        \item Suppose $a \ R \ b$.
+        \item \dots
+        \item Thus, $b \ R \ a$ and $R$ is symmetric.
+    \end{enumerate}
+
+    \item ("Transitivity") Take any $a,b,c \in A$.
+    \begin{enumerate}
+        \item Suppose $a \ R \ b$ and $b \ R \ c$.
+        \item \dots
+        \item Thus, $a \ R \ c$ and $R$ is transitive.
+    \end{enumerate}
+
+    \item Therefore, $R$ is an equivalence relation.
+\end{enumerate}
+\bf{Partial Order}
+\begin{enumerate}
+    \item ("Reflexivity") Take any $a \in A$
+    \begin{enumerate}
+        \item \dots
+        \item Thus, $a \ R \ a$ and $R$ is reflexive.
+    \end{enumerate}
+
+    \item ("Antisymmetry") Take any $a,b \in A$.
+    \begin{enumerate}
+        \item Suppose $a \ R \ b$ and $b \ R \ a$.
+        \item \dots
+        \item Thus, $a = b$ and $R$ is antisymmetric.
+    \end{enumerate}
+
+    \item ("Transitivity") Take any $a,b,c \in A$.
+    \begin{enumerate}
+        \item Suppose $a \ R \ b$ and $b \ R \ c$.
+        \item \dots
+        \item Thus, $a \ R \ c$ and $R$ is transitive.
+    \end{enumerate}
+
+    \item Therefore, $R$ is a partial order.
+\end{enumerate}
+
+\subsection{Other Proofs}
+\bf{iff ($A \iff B$)}
+\begin{enumerate}
+    \item ($\Rightarrow$) Suppose $A$.
+    \begin{enumerate}
+        \item $\dots$ <proof> $\dots$
+        \item Hence $A \then B$
+    \end{enumerate}
+    \item ($\Leftarrow$) Suppose $B$.
+    \begin{enumerate}
+        \item $\dots$ <proof> $\dots$
+        \item Hence $B \then A$
+    \end{enumerate}
+\end{enumerate}
+
+\bf{Logical equivalence of multiple statements}
+\begin{enumerate}
+    \item ((i) $\rightarrow$ (ii))
+    \begin{enumerate}
+        \item \dots
+        \item Hence \dots
+    \end{enumerate}
+
+    \item ((ii) $\rightarrow$ (iii))
+    \begin{enumerate}
+        \item \dots
+        \item Hence \dots
+    \end{enumerate}
+
+    \item ((iii) $\rightarrow$ (i))
+    \begin{enumerate}
+        \item \dots
+        \item Hence \dots
+    \end{enumerate}
+
+    \item Therefore, (i), (ii) and (iii) are logically equivalent.
+\end{enumerate}
+
+
+
+\section{02. COMPOUND STATEMENTS}
+\subsection{Operations}
+\begin{itemize}
+    \item[1] $\sim$ : negation (not)
+    \item[2] $\land$ : conjunction (and)
+    \item[2] $\lor$ : disjunction (or) - coequal to $\land$
+    \item[3] $\rightarrow$ : if-then/conditional
+\end{itemize}
+
+\subsubsection{Logical Equivalence} 
+\begin{itemize}
+    \item identical truth values in truth table
+    \item definitions
+    \item to show non-equivalence: 
+    \begin{itemize}
+        \item truth table method (only needs 1 row)
+        \item counter-example method
+    \end{itemize}
+\end{itemize}
+
+\subsection{Conditional Statements}
+    \begin{equation*}
+        \begin{split}
+            \text{hypothesis/antecedent} &\then \text{conclusion/consequent} \\
+        \end{split}
+    \end{equation*}
+
+\begin{itemize}
+    \item \textbf{vacuously true} : hypothesis is false
+    \item \textbf{implication law} : $p \then q \equiv \lnot p \lor q$
+    \item common if/then statements:
+    \begin{itemize}
+        \item if p then q: $p \then q$
+        \item p if q: $q \then p$
+        \item p only if q: $p \then q$
+        \item p iff q: $p \iff q$
+    \end{itemize}
+\end{itemize}
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item \bf{contrapositive} : $\lnot q \then \lnot p$ 
+        \item \bf{inverse} : $\lnot p \then \lnot q$ 
+        \item \bf{converse} : $q \then p$ 
+    \end{itemize} 
+    \begin{center}
+        converse $\equiv$ inverse 
+        \\ statement $\equiv$ contrapositive 
+    \end{center}
+\end{multicols}
+
+\begin{itemize}
+    \item r is a \bf{necessary} condition for s: $\lnot r \then \lnot s$ and $s \then r$
+    \item r is a \bf{sufficient} condition for s: $r \then s$
+    \item biconditional / \bf{necessary} \& \bf{sufficient} : $\iff$
+\end{itemize}
+
+\subsection{Valid Arguments}
+\begin{itemize}
+    \item determining validity: construct truth table
+    \begin{itemize}
+        \item valid $\iff$ conclusion is true when premises are true
+    \end{itemize}
+    \item \bf{syllogism} : (argument form) 2 premises, 1 conclusion
+    \item \bf{sound argument} : is valid \& all premises are true
+\end{itemize}
+
+\subsection{Rules of Inference}
+    \begin{multicols}{3}
+        \textbf{Modus Ponens}
+        \\* $p \then q$ \\ $p$  \\ $\therefore q$
+
+        \textbf{Modus Tollens}
+        \\* $p \then q$ \\ $\lnot q$  \\ $\therefore \lnot p$
+
+        \textbf{Proof by Division into Cases}
+        \\* $p \lor q$ \\ $p \then r$ \\ $q \then r$ \\ $\therefore r$
+
+        \textbf{Generalisation}
+        \\* $p$ \\ $\therefore p \lor q$
+
+        \textbf{Specialisation}
+        \\* $p \land q$ \\ $\therefore p$
+        
+        \textbf{Elimination}
+        \\* $p \lor q$ \\ $\lnot q$ \\ $\therefore p$
+        
+        \textbf{Transitivity}
+        \\* $p \then q$ \\ $q \then r$ \\ $\therefore p \then r$
+
+        \textbf{Conjunction}
+        \\* $p$ \\ $q$ \\ $p \land q$
+
+        \textbf{Contradiction Rule}
+        \\* $\lnot p \then \mathbf{false}$ \\ $\therefore p$
+    \end{multicols}
+
+\subsection{Fallacies}
+\begin{center}
+    \begin{multicols}{2}
+        \textbf{Converse Error}
+        \\* $p \then q$ \\ $q$ \\ $\therefore p$
+
+        \textbf{Inverse Error}
+        \\* $p \then q$ \\ $\lnot p$ \\ $\therefore \lnot q$
+    \end{multicols}
+\end{center}
+
+\section{03. QUANTIFIED STATEMENTS}
+\begin{itemize}
+    \item \bf{truth set} of $P(x) = \{x \in D \mid P(x)\}$
+    \item $P(x) \Rightarrow Q(x)$ : $\forall x (P(x) \then Q(x))$
+\item $P(x) \Leftrightarrow Q(x)$ : $\forall x (P(x) \iff Q(x))$
+\end{itemize}
+\bf{relation between $\forall, \exists, \land, \lor$}
+\begin{itemize}
+    \item $\forall x \in D, Q(x) \equiv Q(x_1) \land Q(x_2) \land \dots \land Q(x_n)$
+    \item $\exists x \in D \mid Q(x) \equiv Q(x_1) \lor Q(x_2) \lor \dots \lor Q(x_n)$
+\end{itemize}
+\textbf{Similar to compound statements:}
+\\ Contrapositive, converse, inverse, necessary and sufficient, only if, rules of inference
+
+
+\section{05. SETS}
+\subsection{Notation}
+\begin{itemize}
+    \item Set Roster Notation [1]: $\{x_1, x_2, \dots, x_n\}$
+    \item Set Roster Notation [2]: $\{x_1, x_2, x_3, \dots\}$
+    \item Set-Builder Notation: $\{x \in \mathbb{U} : P(x)\}$ or $\{x \in \mathbb{U} \mid P(x)\}$
+    \item Replacement Notation: $\{t(x): x \in A\}$ or $\{t(x) \mid x \in A\}$
+    \item Intervals of real numbers: $(a, b] = \{x \in \mathbb{R}: a < x \leq b\}$
+    \item Unions/Intersection of Indexed Collection of Sets:
+    \\ $\bigcup\limits_{i=0}^{n}A_{i}=\{x \in U \mid x \in A_{i} \text{ for at least one } i=0,1,2,\dots,n\} = A_{0} \cup A_{1} \cup \dots \cup A_{n}$
+    \\ $\bigcap\limits_{i=0}^{n}A_{i}=\{x \in U \mid x \in A_{i} \text{ for all } i=0,1,2,\dots,n\} = A_{0} \cap A_{1} \cap \dots \cap A_{n}$
+\end{itemize}
+
+\subsection{Set Definitions}
+\begin{itemize}
+    \item \bf{Cardinality} of a set, $\mid A \mid$ : number of elements
+    \item \bf{Singleton} : sets of size 1
+    \begin{itemize}
+        \item $A = B \iff (A \subseteq B) \land (A \supseteq B)$
+    \end{itemize}
+    \item \bf{Empty Set}, $\varnothing$ : $\varnothing \subseteq $ all sets (T6.2.4)
+    \item \bf{Subset} : $A \subseteq B \iff \forall x(x \in A \then x \in B)$
+    \item \bf{Proper Subset} : $A \subsetneq B \iff (A \subseteq B) \land (A \neq B)$
+    \item \bf{Set Equality} : $A = B \iff \forall x (x \in A \iff x \in B) \iff A \subseteq B \land B \subseteq A$ 
+    \item \bf{Disjoint} : $A \cap B = \varnothing$
+    \item \bf{Mutually/pairwise disjoint}: $A_{i} \cap A_{j} = \varnothing$ whenever $i \neq j$
+    \item \bf{Power Set} of A : $\mathcal{P}(A) = \{X \mid X \subseteq A\}$
+    \begin{itemize}
+        \item $\vert \mathcal{P}(A) \vert = 2^{\vert A \vert}$, given that A is a finite set (T6.3.1)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{methods of proof for sets}
+\begin{itemize}
+    \item direct proof
+    \item element method
+    \item truth table
+\end{itemize}
+
+\subsubsection{Set Operations}
+\begin{itemize}
+    \item \bf{Union:} $A \cup B = \{x : x \in A \lor x \in B\}$
+    \item \bf{Intersection: } $A \cap B = \{x : x \in A \land x \in B\}$
+    \item \bf{Difference} (of A minus B) or \bf{Relative Complement} (of B in A): $A \setminus B = A - B = \{x : x \in A \land x \notin B\}$
+    \item \bf{Complement} (of B): $\bar{B}$ or $B^c = U \setminus B$
+    \begin{itemize}
+        \item set difference law: $A \backslash B = A \cap \bar{B}$
+    \end{itemize}
+\end{itemize}
+
+\subsection{Ordered Pairs and Cartesian Products}
+\begin{itemize}
+    \item \bf{Ordered pair} : $(x, y)$
+    \begin{itemize}
+        \item $(a, b) = (c, d) \iff (a = c) \land (b = d)$
+    \end{itemize}
+    \item \bf{Cartesian product} : $A \times B = \{(x, y) : x \in A \land y \in B\} $
+    \begin{itemize}
+        \item $\vert A \times B \vert = \vert A \vert \times \vert B \vert$
+    \end{itemize}
+    \item \bf{Orderned $n$-tuple} : expression of the form $(x_1, x_2, \dots, x_n)$
+\end{itemize}
+
+\subsection{Subset Relations (T6.2.1)}
+\begin{itemize}
+    \item \bf{Inclusion of Intersection:} $A \cap B \subseteq A$ and $A \cap B \subseteq B$
+    \item \bf{Inclusion in Union:} $A \subseteq A \cup B$ and $B \subseteq A \cup B$
+    \item \bf{Transitive Property of Subsets:} $A \subseteq B \land B \subseteq C \then A \subseteq C$
+\end{itemize}
+
+
+\section{06. RELATIONS}
+\subsection{Relations Definitions}
+\begin{center}
+    Let $A$ and $B$ be sets. A (binary) relation from $A$ to $B$ is a subset of $A \times B$.
+    Given an ordered pair $(x, y) \in A \times B$, \bf{x is related to y by R} or \bf{x is R-related to y}
+    \\* $x \ R \ y \iff (x, y) \in R$
+\end{center}
+
+\begin{itemize}
+    \item \bf{Domain}: $Dom(R) = \{a \in A: a \ R \ b \text{ for some } b \in B\}$
+    \item \bf{Co-domain}: $coDom(R) = B$
+    \item \bf{Range}: $Range(R) = \{b \in B: a \ R \ b \text{ for some } a \in A\}$
+    \item A \textbf{relation on a set} $A$ is a relation from $A$ to $A$ ($\subseteq$ of $A^{2}$).
+    \item \bf{Inverse Relation}: $R^{-1} = \{(y,x) \in B \times A: (x, y) \in R\}$
+    \item \bf{Composition} of R with S: $\forall x \in A, \forall z \in C \Bigl(x \ S \circ R \ z \iff \bigl( \exists y \in B (x \ R \ y \land y \ S \ z) \bigr) \Bigr)$
+    \item \bf{$n$-ary Relation} R on $A_1 \times A_2 \times \dots \times A_n$ is a subset of 
+    $A_1 \times A_2 \times \dots \times A_n$ (2-ary = binary, 3-ary = ternary)
+\end{itemize}
+
+\subsubsection{Properties of Relations}
+Let $A$ be a set and $R$ be a relation on $A$.
+\begin{itemize}
+    \item \bf{Reflexive}: $\forall x \in A \ (x \ R \ x)$
+    \item \bf{Symmetric}: $\forall x, y \in A \ (x \ R \ y \then y \ R \ x)$
+    \item \bf{Transitive}: $\forall x, y, z \in A \ (x \ R \ y \land y \ R \ z \then x \ R \ z)$
+    \item Note: Relations are reflexive, elements are \bf{related} to themselves.
+    \item \bf{Transitive Closure} of $R$ is relation $R^t$ on $A$ such that:
+    \begin{itemize}
+        \item $R^t$ is transitive.
+        \item $R \subseteq R^t$.
+        \item If $S$ is any other transitive relation that contains $R$, then $R^t \subseteq S$.
+    \end{itemize}
+    \item \bf{Antisymmetry}: $\forall x, y \in A (x \ R \ y \land y \ R \ x \then x = y)$
+\end{itemize}
+
+\subsection{Equivalence Relations}
+Let $A$ be a set and $\sim$ be a relation on $A$.
+\begin{itemize}
+    \item $\sim$ is an \bf{equivalence relation} on $A$ iff $\sim$ is reflexive, symmetric and transitive.
+    \item \bf{Equivalence class} of $a$: $[a]_\sim = \{x \in A: a \sim x\}$
+    \item Lemma Rel.1 Equivalence Classes: 
+    \\ $x \sim y \iff [x]=[y] \iff [x] \cap [y] \neq \varnothing$
+    \item T8.3.4: Distinct equivalence classes of $R$ form a \bf{partition} of $A$,
+    i.e. the union of equivalence classes is all of $A$, and the intersection of any 2 distinct classes is empty.
+    \item \bf{Set of equivalence classes}: {$A / R = \{[x]_\sim : x \in A\}$}
+    \item Theorem Rel.2 Equivalence classes form a partition: $A / \sim$ is a partition of $A$.
+\end{itemize}
+
+\subsection{Partitions}
+\begin{itemize}
+    \item $\mathscr{C}$ is a \textbf{partition} of a set $A$ if the following hold:
+    \begin{itemize}
+        \item $\varnothing \neq S \subseteq A$ for all $S \in \mathscr{C}$ (all elements are non-empty subsets of A)
+        \item $\forall x \in A \ \exists S \in \mathscr{C} (x \in S)$ and
+        \\* $\forall x \in A \ \forall S_1, S_2 \in \mathscr{C} \bigl( x \in S_1 \land x \in S_2 \then S_1 = S_2\bigr)$
+        \\ OR $\forall x \in A \ \exists! S \in \mathscr{C} (x \in S)$
+    \end{itemize}
+    \item \textbf{Components} : elements of a partition
+    \item \bf{Relation induced by a Partition}: $\forall x, y \in A$,
+    \\ $x \ R \ y \iff \exists \text{ a component } S \text{ of } \mathscr{C} \text{ s.t. } x, y \in S$
+    \item Relation induced by a Partition is an \bf{reflexive, symmetric and transitive}, i.e. an equivalence relation. (T8.3.1)
+\end{itemize}
+
+\subsection{Partial Order}
+Let $A$ be a set and $R$ be a relation on $A$.
+\begin{itemize}
+    \item $R$ is a \bf{partial order} if $R$ is \bf{reflexive, antisymmetric and transitive}.
+    \item $A$ is called a \bf{partially ordered set/poset} w.r.t partial order relation $R$ on $A$, denoted by $(A, R)$.
+    \item L6, Slide 68: Example of Partial order relations
+    \begin{itemize}
+        \item $\leq$ relation on a set of real numbers
+        \item $\subseteq$ relation on a set of sets
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Comparability}
+Let $\preccurlyeq$ be a partial order on a set $A$.
+\begin{itemize}
+    \item \bf{Hasse Diagram} of $\preccurlyeq$ satisfies for all distinct $x,y,m \in A$:
+    \\ If $x \preccurlyeq y$ and no $m \in A$ such that $x \preccurlyeq m \preccurlyeq y$, then
+    $x$ is placed below $y$ with a line joining them, else no line joins $x$ and $y$.
+    \item \bf{Comparable}: $\forall x, y \in A \ (x \preccurlyeq y \lor y \preccurlyeq x)$
+\end{itemize}
+
+Let $\preccurlyeq$ be a partial order on a set $A$ and $c \in A$.
+\begin{itemize}
+    \item \bf{Minimal element} ("nothing below"): $\forall x \in A \ (x \preccurlyeq c \Then c = x)$
+    \item \bf{Maximal element} ("nothing above"): $\forall x \in A \ (c \preccurlyeq x \Then c = x)$
+    \item \bf{Smallest/Minimum/Least element} ("everything above"): $\forall x \in a \ (c \preccurlyeq x)$.
+    \item \bf{Largest/Maximum/Greatest} ("everything below"): $\forall x \in a \ (x \preccurlyeq c)$.
+    \item L6, Slide 83: A smallest element is minimal.
+    \item $A$ is \bf{well-ordered} iff
+    \\ $\forall S \in \mathcal{P}(A), S \neq \varnothing \then \bigl( \exists x \in S \ \forall y \in S (x \preccurlyeq y)\bigr)$
+    \begin{itemize}
+        \item $(\mathbb{N}, \leq)$ is well-ordered.
+        \item $(\mathbb{Z}, \leq)$ is not well-ordered.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Linearization}
+\begin{itemize}
+    \item $R$ is a \bf{total order relation} on $A$ iff 
+    \\ $R$ is a partial order and $\forall x, y \in A (x \ R \ y \lor y \ R \ x)$
+    \item Linearization of $\preccurlyeq$ is a total order $\preccurlyeq^*$ on $A$ such that
+    \\ $\forall x, y \in A (x \preccurlyeq y \then x \preccurlyeq^* y)$
+\end{itemize}
+
+\end{multicols}
+
+\begin{center}
+    \begin{tabular}{>{\color{black}}r | c | c}
+        \multicolumn{3}{>{\color{black}}c}{LOGICAL EQUIVALENCES (T2.1.1)} 
+        \\ \hline 
+        Commutative Laws 
+            & $p \land q \equiv q \land p$
+            & $p \lor q \equiv q \lor p$
+        \\ Associative Laws
+            & $(p \land q) \land r \equiv p \land (q \land r)$
+            & $(p \lor q) \lor r \equiv p \lor (q \lor r)$
+        \\ Distributive Laws
+            & $p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$
+            & $p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$
+        \\ Identity Laws
+            & $p \land true \equiv p$
+            & $p \lor false \equiv p$
+        \\ Idempotent Laws
+            & $p \land p \equiv p$
+            & $p \lor p \equiv p$
+        \\ Universal Bound Laws
+            & $p \lor true \equiv true$
+            & $p \land false \equiv false$
+        \\ Negation Laws
+            & $p \lor \lnot p \equiv true$
+            & $p \land \lnot p \equiv false$
+        \\ Double Negation Law
+            & $\lnot (\lnot p) \equiv p$
+            & —
+        \\ Absorption Laws
+            & $p \lor (p \land q) \equiv p$
+            & $p \land (p \lor q) \equiv p$
+        \\ Variant Absorption Laws (Assignment 1, Q1a)
+            & $p \lor (\lnot p \land q) \equiv p \lor q$
+            & $p \land (\lnot p \lor q) \equiv p \land q$
+        \\ De Morgan's Laws
+            & $\lnot (p \lor q) \equiv \lnot p \land \lnot q $
+            & $\lnot (p \land q) \equiv \lnot p \lor \lnot q$
+     \end{tabular}
+     \quad
+     \begin{tabular}{>{\color{black}}r | c | c}
+        \multicolumn{3}{>{\color{black}}c}{SET IDENTITIES} 
+        \\ \hline 
+        Commuative Laws
+            & $A \cap B = B \cap A$
+            & $A \cup B = B \cup A$
+        \\ Associative Laws
+            & $(A \cap B) \cap C = A \cap (B \cap C)$
+            & $(A \cup B) \cup C = A \cup (B \cup C)$
+        \\ Distributive Laws
+            & $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+            & $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+        \\ Identity Laws
+            & $A \cap U = A$
+            & $A \cup \emptyset = A$
+        \\ Idempotent Laws
+            & $A \cap A = A$
+            & $A \cup A = A$
+        \\ Universal Bound Laws
+            & $A \cap \emptyset = \emptyset$
+            & $A \cup U = U$
+        \\ Complement Laws
+            & $A \cap \overline{A} = \emptyset$
+            & $A \cup \overline{A} = U$
+        \\ Double \bf{Complement} Law
+            & $\overline{(\overline{A})} = A$
+            & ---
+        \\ Absorption Laws
+            & $A \cup (A \cap B) = A$
+            & $A \cap (A \cup B) = A$
+        \\ De Morgan's Laws
+            & $\overline{A \cup B} = \overline{A} \cap \overline{B}$
+            & $\overline{A \cap B} = \overline{A} \cup \overline{B}$
+     \end{tabular}
+\end{center}
+\begin{center}
+    % \hrulefill \\
+    \dotfill
+\end{center}
+
+\pagebreak
+
+\begin{multicols}{3}
+    \section{Proven:}
+    \subsection{Numbers}
+    \begin{itemize}
+        \item T4.2.1 - Evey integer is a rational number
+        \item T4.2.2 - The sum of any 2 rational numbers is rational
+        \item C4.2.3 - The double of a rational number is rational
+        \item T4.6.1 - There is no greatest integer
+        \item P4.6.4 - For all integers $n$, if $n^2$ is even then $n$ is even
+        \item E1.1 - The product of 2 consecutive odd numbers is always odd
+        \item E1.5 - The difference between 2 consecutive squares is always odd
+        \item E1.7 - There exist irrational numbers $p$ and $q$ such that $p^q$ is rational
+        \item T4.7.1 - $\sqrt{2}$ is irrational.
+        \item Tut 1, Q9 - Product of 2 odd integers is an odd integer
+        \item Tut 1, Q10 - $n^2$ is odd iff $n$ is odd
+        \item Tut 2, Q3b - Rational numbers are closed under addition
+    \end{itemize}
+    \subsubsection{Divisibility}
+    \begin{itemize}
+        \item T4.3.1 - For all positive integers $a$ and $b$, if $a \vert b$, then $a \leq b$.
+        \item T4.3.2 - The only divisors of $1$ are $1$ and $-1$
+        \item T4.3.3 - Transitivity of divisibility: $\forall a, b, c \in \mathbb{Z}(a \mid b \land b \mid c \then a \mid c)$
+        \item T4.4.1 Quotient-Remainder Theorem: Given any integer $n$ and positive integer $d$,
+        there exist unique integers $q$ and $r$ such that $n=dq + r$ and $0 \leq r < d$.
+    \end{itemize}
+
+    \subsection{Logic}
+    \begin{itemize}
+        \item T3.2.1 - Negation of a universal statement: 
+        \begin{itemize}
+            \item $\lnot (\forall x \in D, P(x)) \equiv \exists x \in D \mid \lnot P(x)$
+        \end{itemize}
+        \item T3.2.2 - Negation of an existential statement: 
+        \begin{itemize}
+            \item $\lnot (\exists x \in D \mid P(x)) \equiv \forall x \in D, \lnot P(x)$
+        \end{itemize}
+        \item A1, Q1b - $\bigl((p \to q) \land (q \to r)\bigr) \to (p \to r)$
+    \end{itemize}
+
+    \subsection{Sets}
+    \begin{itemize}
+        \item T6.2.1 Subset Relations (see Sets section)
+        \item T6.2.4 An empty subset is a subset of every set, i.e. $\varnothing \in A$ for all sets $A$
+        \item T6.3.1 Suppose $A$ is a finite set with $n$ elements, then $\mathcal{P}(A)$ has $2^n$ elements
+        \item Tut 3 Q5 - $A \cap (B \setminus C) = (A \cap B) \setminus C$
+        \item Tut 3 Q6 - $A \setminus (B \setminus C) = (A \setminus B) \cup (A \cap C)$
+        \item Tut 3 Q7 - Symmetric difference ($\oplus$):
+        \\ $A \oplus B = (A \setminus B) \cup (B \setminus A) \text{ (given)} = (A \cup B) \setminus (A \cap B) \text{ (proven)}$
+        \item Tut 3 Q8 - $A \subseteq B \Leftrightarrow A \cup B = B$
+        \item Tut 3 Q12: Let $B_{1}, B_{2}, B_{3},\dots,B_{k}$ and $C_{1},C_{2},C_{3},\dots,C_{l}$ such that $\bigcup\limits_{i=1}^{k}B_{i} \subseteq \bigcap\limits_{j=1}^{l}C_{j}$
+	- $B_{i} \subseteq C_{j}$ for any $i \in \{1,2,\dots,k\}$ and any $j \in \{1,2,\dots,l\}$
+
+    \end{itemize}
+
+    \subsection{Relations}
+    \begin{itemize}
+        \item T8.3.1 -  Relation Induced by a Partition (see Partitions section)
+        \item L Rel.1 - Equivalence Classes (see Equivalence Relations section)
+        \item T8.3.4 - Partition Induced by an Equivalence Relation (see Equivalence Relations section)
+        \item T Rel.2 - Equivalence Classes form a Partition (see Equivalence Relations section)
+        \item Tut 4, Q2 - The following statements are logically equivalent:
+        \begin{itemize}
+            \item $\forall x, y \in A (x \ R \ y \then y \ R \ x)$ ($R$ is symmetric)
+            \item $\forall x, y \in A (x \ R \ y \iff y \ R \ x)$
+            \item $R = R^-1$
+        \end{itemize}
+        \item Tut 4, Q6 - Composition of relations is Associative
+        \\ $T \circ (S \circ R) = (T \circ S) \circ R$
+        \item Tut 4, Q9 - Let $\mathcal{C}$ be a partition of a set $A$. Denote by $\sim$ the same-component relation with respect to $\mathcal{C}$, i.e. for all $x,y \in A$,
+        \begin{itemize}
+            \item $x\sim y \Leftrightarrow x\text{ is in the same component of }\mathcal{C}\text{ as }y \Leftrightarrow x,y \in S \text{ for some } S \in \mathcal{C}$
+            \item Proven: $x\in S \in \mathcal{C} \to [x]=S$
+            \item Proven: $A/\sim \ =\mathcal{C}$
+        \end{itemize}
+        \item Tut 5, Q3 - $\subseteq$ on $\mathcal{P}(A)$ is a partial order
+        \item Tut 5, Q5 - $x S y \Leftrightarrow x = y \lor x \ R \ y$ for all $x, y \in A$ is called the \bf{reflexive closure} of R
+        \item Tut 5, Q6 - Asymmetry: $\forall x, y \in A (x \ R \ y \Rightarrow y \not R x)$
+        \\ Every asymmetric relation is antisymmetric
+        \item Tut 5, Q7 - In a total order $\preccurlyeq$ on A, all minimal elements are smallest
+        \item Tut 5, Q8 - $a, b$ are compatible iff there exists $c \in A$ such that $a \preccurlyeq c$ and $b \preccurlyeq c$
+        \item Tut 5, Q10 - In all partially ordered sets, any two \bf{comparable} elements are \bf{compatible}.
+    \end{itemize}
+
+    \subsection{Appendix A}
+    \subsubsection{Field Axioms}
+    \begin{itemize}
+        \item F1 - Commutative Laws: $\forall a, b \in \mathbb{R}, a + b = b + a \text{ and } ab = ba$
+        \item F2 - Associative Laws: $\forall a, b, c \in \mathbb{R}, (a + b) + c = a + (b + c) \text{ and } (ab)c = a(bc)$
+        \item F3 - Distributive Laws: $\forall a, c, c \in \mathbb{R}, a(b+c)=ab+ac \text{ and } (b+c)a=ba+ca$
+        \item F4 - Existence of Identity Elements:
+        There exist two distinct real numbers, denoted 0 and 1, such that
+        \\ $\forall a \in \mathbb{R}, 0 + a = a + 0 = a \text{ and } 1 \cdot a = a \cdot 1 = a$
+        \item F5 - Existence of Additive Inverses: $\forall a \in \mathbb{R}$, there is a real number,
+        denoted $-a$ and called the \bf{additive inverse} of $a$, such that
+        \\ $a + (-a) = (-a) + a = 0$
+        \item F6 - Existence of Reciprocals: $\forall a \in \mathbf{R}$, there is a real number,
+        denoted $1 / a$ or $a^{-1}$, called the \bf{reciprocal} of $a$, such that
+        \\ $a \cdot (\frac{1}{a}) = (\frac{1}{a}) \cdot a = 1$
+    \end{itemize}
+
+    \subsubsection{Algebra}
+    Let $a, b, c, d$ represent arbitrary real numbers.
+    \begin{itemize}
+        \item T1 - Cancellation Law for Addition: If $a + b = a + c$, then $b = c$
+        \item T2 - Possibility of Subtraction: Given $a$ and $b$, there is exactly one $x$ such that
+        $a + x = b$. This $x$ is denoted by $b - a$. In particular, $0 - a$ is the additive inverse of $a$, $-a$.
+        \item T3 - $b - a = b + (-a)$
+        \item T4 - $-(-a) = a$
+        \item T5 - $a(b-c) = ab - ac$
+        \item T6 - $0 \cdot a = a \cdot 0 = 0$
+        \item T7 - Cancellation Law for Multiplication: If $ab = ac$ and $a \neq 0$, then $b = c$
+        \item T8 - Possibility of Division: Given $a$ and $b$ with $a \neq 0$, there is exactly one $x$
+        such that $ax = b$. This $x$ is denoted by $b / a$ and is called the \bf{quotient} of $b$ and $a$.
+        In particular, $\frac{1}{a}$ is the reciprocal of $a$
+        \item T9 - If $a \neq 0$, then $b / a = b \cdot a^{-1}$
+        \item T10 - If $a \neq 0$, then $(a^{-1})^{-1} = a$
+        \item T11 - Zero Product Property: If $ab = 0$, then $a = 0$ or $b = 0$
+        \item T12 - Rule for Multiplication with Negative Signs
+        \\ $(-a)b = a(-b) = -(ab)$, $(-a)(-b)=ab$
+        \\ and $-\frac{a}{b} = \frac{-a}{b} = \frac{a}{-b}$
+        \item T13 - Equivalent Fractions Property: $\frac{a}{b} = \frac{ac}{bc}$ if $b \neq 0$ and $c \neq 0$
+        \item T14 - Rule for Addition of Fractions: $\frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd}$ if $b \neq 0$ and $d \neq 0$
+        \item T15 - Rule for Multiplication of Fractions: $\frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}$ if $b \neq 0$ and $d \neq 0$
+        \item T16 - Rule for Division of Fractions: $\frac{\frac{a}{b}}{\frac{c}{d}} = \frac{ad}{bc}$ if $b \neq 0, c \neq 0, d \neq 0$
+    \end{itemize}
+
+    \subsubsection{Order Axioms}
+    \begin{itemize}
+        \item Ord1 - For any real nubmers $a$ and $b$, if $a$ and $b$ are positive, so are $a + b$ and $ab$.
+        \item Ord2 - For every real number $a \neq 0$, either $a$ is positive or $-a$ is positive but not both.
+        \item Ord3 - The number 0 is not positive.
+    \end{itemize}
+
+    \subsubsection{Inequality}
+    \begin{itemize}
+        \item T17 - Trichotomy Law: For arbitrary real numbers $a$ and $b$, exactly one of three relations
+        $a < b$, $b < a$ or $a = b$ holds
+        \item T18 - Transitive Law: If $a<b$ and $b<c$, then $a<c$
+        \item T19 - If $a < b$, then $a + c < b + c$
+        \item T20 - If $a < b$ and $c > 0$, then $ac < bc$
+        \item T21 - If $a \neq 0$, then $a^2 > 0$
+        \item T22 - $1 > 0$
+        \item T23 - If $a < b$ and $c < 0$, then $ac > bc$
+        \item T24 - If $a < b$, then $-a > -b$. In particular, if $a < 0$, then $-a > 0$
+        \item T25 - If $ab > 0$, then both $a$ and $b$ are positive or both are negative
+        \item T26 - If $a < c$ and $b < d$, then $a + b < c + d$
+        \item T27 - if $0 < a < c$ and $0 < b < d$, then $0 < ab < cd$
+    \end{itemize}
+
+
+\begin{center}
+    \fbox{%
+        \parbox{0.5\linewidth}{\textcolor{black}{%
+            {\large Abbreviations}
+            \begin{itemize}
+                \item L - Lemma
+                \item Ex.y - Example (Lecture X, Example Y)
+                \item P - Proposition
+                \item T - Theorem
+                \item Tut - Tutorial
+                \item A - Assignment
+            \end{itemize}
+        }}%
+    }
+\end{center}
+\end{multicols}
+
+\end{document}
