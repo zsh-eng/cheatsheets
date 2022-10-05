@@ -67,6 +67,9 @@
 \renewcommand{\bf}[1]{\textbf{#1}}
 \newcommand{\abs}[1]{\vert #1 \vert}
 \newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+% follow "true" and "false" formatting from the slides
+\newcommand{\true}{\textbf{true}}
+\newcommand{\false}{\textbf{false}}
 
 \makeatother
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
@@ -656,33 +659,36 @@ Let $\preccurlyeq$ be a partial order on a set $A$ and $c \in A$.
             & $p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$
             & $p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$
         \\ Identity Laws
-            & $p \land true \equiv p$
-            & $p \lor false \equiv p$
+            & $p \land \true \equiv p$
+            & $p \lor \false \equiv p$
         \\ Idempotent Laws
             & $p \land p \equiv p$
             & $p \lor p \equiv p$
         \\ Universal Bound Laws
-            & $p \lor true \equiv true$
-            & $p \land false \equiv false$
+            & $p \lor \true \equiv \true$
+            & $p \land \false \equiv \false$
         \\ Negation Laws
-            & $p \lor \lnot p \equiv true$
-            & $p \land \lnot p \equiv false$
+            & $p \lor \lnot p \equiv \true$
+            & $p \land \lnot p \equiv \false$
         \\ Double Negation Law
             & $\lnot (\lnot p) \equiv p$
             & —
         \\ Absorption Laws
             & $p \lor (p \land q) \equiv p$
             & $p \land (p \lor q) \equiv p$
-        \\ Variant Absorption Laws (Assignment 1, Q1a)
-            & $p \lor (\lnot p \land q) \equiv p \lor q$
-            & $p \land (\lnot p \lor q) \equiv p \land q$
         \\ De Morgan's Laws
             & $\lnot (p \lor q) \equiv \lnot p \land \lnot q $
             & $\lnot (p \land q) \equiv \lnot p \lor \lnot q$
+        \\ Negation of \true{} and \false
+            & $\lnot \true \equiv \false$
+            & $\lnot \false \equiv \true$
+        \\ Variant Absorption Laws (A1, Q1a)
+            & $p \lor (\lnot p \land q) \equiv p \lor q$
+            & $p \land (\lnot p \lor q) \equiv p \land q$
      \end{tabular}
      \quad
      \begin{tabular}{>{\color{black}}r | c | c}
-        \multicolumn{3}{>{\color{black}}c}{SET IDENTITIES} 
+        \multicolumn{3}{>{\color{black}}c}{SET IDENTITIES (T6.2.2)} 
         \\ \hline 
         Commuative Laws
             & $A \cap B = B \cap A$
@@ -714,6 +720,12 @@ Let $\preccurlyeq$ be a partial order on a set $A$ and $c \in A$.
         \\ De Morgan's Laws
             & $\overline{A \cup B} = \overline{A} \cap \overline{B}$
             & $\overline{A \cap B} = \overline{A} \cup \overline{B}$
+        \\ Complements of $U$ and $\varnothing$
+            & $\bar U = \varnothing$
+            & $\bar \varnothing = U$
+        \\ Set Difference Law
+            & $A \ \backslash \ B = A \cap \bar B$
+            & ---
      \end{tabular}
 \end{center}
 \begin{center}
