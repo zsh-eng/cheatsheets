@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumitem}
+% Change margins to 1 inch
+\usepackage[margin=1in]{geometry}
+
+% Makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+% Logical not operator
+\renewcommand{\lnot}{\mathord{\sim}} 
+% Shortcut for bold face font
+\renewcommand{\bf}[1]{\textbf{#1}} 
+\newcommand{\abs}[1]{\vert #1 \vert}
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+% Follow "true" and "false" formatting from the slides
+\newcommand{\true}{\textbf{true}}
+\newcommand{\false}{\textbf{false}}
+% Shortcuts for common commands
+\newcommand{\ZZ}{\mathbb Z} % Set of integers
+\newcommand{\fain}[2]{\forall{#1\in#2}\ \ } % Universal statement with spacing in with spacing
+\newcommand{\eset}{\varnothing} % Alternative version of empty set
+\newcommand{\pset}{\mathcal{P}} % Power set
+% Change leq and geq signs to slant
+\let\leq\leqslant
+\let\geq\geqslant
+
+\begin{document}
+\begin{center}
+    \huge
+    \textbf{CS1231S Assignment 2}
+
+    \vspace{0.5cm}
+    Cheng Zhi Sheng \\
+       
+    \vspace{0.5cm}
+    Tutorial Group 03B\\
+
+    \vspace{0.5cm}
+\end{center}
+
+% Example proofs
+    
+\section*{Question 1}
+\subsection*{Q1a}
+\subsubsection*{Example Proof}
+\begin{enumerate}
+    \item $(\subseteq)$ Take any $z \in A$.
+    \begin{enumerate}
+        \item $\dots$
+        \item $\therefore z \in B$.
+    \end{enumerate}
+
+    \item $(\supseteq)$ Take any $z \in B$.
+    \begin{enumerate}
+        \item $\dots$
+        \item $\therefore z \in A$.
+    \end{enumerate}
+
+    \item Thus, $A=B$ (by definition of set equality).
+\end{enumerate}
+
+
+\end{document}
